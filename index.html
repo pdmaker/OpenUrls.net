@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenURLs - Batch URL Opener</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://openurls.net/">
+    <meta property="og:title" content="OpenURLs - Batch URL Opener">
+    <meta property="og:description" content="Efficiently open multiple URLs with a single click. Perfect for researchers, marketers, and content creators.">
+    <meta property="og:image" content="images/favicon-512x512.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://openurls.net/">
+    <meta property="twitter:title" content="OpenURLs - Batch URL Opener">
+    <meta property="twitter:description" content="Efficiently open multiple URLs with a single click. Perfect for researchers, marketers, and content creators.">
+    <meta property="twitter:image" content="images/favicon-512x512.png">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="description" content="OpenURLs - A simple, efficient tool to open multiple URLs simultaneously. Save time and streamline your browsing experience.">
+    <meta name="keywords" content="URL opener, batch URL, multiple tabs, productivity tool, web research">
+    <meta name="author" content="OpenURLs Team">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#ffffff',
+                        foreground: '#000000',
+                        'muted-foreground': '#6b7280',
+                        border: '#e5e7eb',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+    <div class="container mx-auto max-w-4xl p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-2">OpenURLs.net</h1>
+            <p class="text-xl text-muted-foreground">
+                A simple tool to open multiple URLs with a customizable delay
+            </p>
+        </header>
+
+        <main class="space-y-6">
+            <section class="url-input-section">
+                <label for="urlInput" class="block text-sm font-medium mb-2">
+                    Enter URLs (one per line)
+                </label>
+                <textarea 
+                    id="urlInput" 
+                    placeholder="Enter your URLs here...&#10;https://example1.com&#10;https://example2.com"
+                    rows="10"
+                    class="w-full min-h-[200px] p-3 border border-border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                ></textarea>
+            </section>
+
+            <section class="controls grid md:grid-cols-2 gap-6">
+                <div class="delay-control">
+                    <label for="delaySlider" class="block text-sm font-medium mb-4">
+                        Delay between opens: 
+                        <span id="delayValue" class="font-bold">0.5</span> seconds
+                    </label>
+                    <input 
+                        type="range" 
+                        id="delaySlider" 
+                        min="0.1" 
+                        max="5" 
+                        step="0.1" 
+                        value="0.5"
+                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    >
+                </div>
+
+                <div class="open-type-control">
+                    <label class="block text-sm font-medium mb-4">Open in:</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input 
+                                type="radio" 
+                                id="openTabs" 
+                                name="openType" 
+                                value="tabs" 
+                                checked
+                                class="form-radio"
+                            >
+                            <span class="ml-2">New Tabs</span>
+                        </label>
+
+                        <label class="inline-flex items-center">
+                            <input 
+                                type="radio" 
+                                id="openWindows" 
+                                name="openType" 
+                                value="windows"
+                                class="form-radio"
+                            >
+                            <span class="ml-2">New Windows</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="actions flex gap-4">
+                <button 
+                    id="clearBtn" 
+                    class="flex-1 px-4 py-2 border border-gray-300 text-gray-500 rounded-md hover:bg-gray-100 transition-colors"
+                >
+                    Clear
+                </button>
+                <button 
+                    id="openUrlsBtn" 
+                    class="flex-1 px-4 py-2 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition-colors"
+                >
+                    Open URLs
+                </button>
+            </section>
+
+            <section class="how-to-use bg-blue-50 p-6 rounded-md border-l-4 border-blue-500">
+                <h2 class="text-2xl font-bold mb-4 text-blue-800 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    How to Use
+                </h2>
+                <ol class="list-decimal list-inside space-y-3 text-gray-700">
+                    <li class="pl-2">Enter your URLs (one per line)</li>
+                    <li class="pl-2">Adjust the delay between opens (0.1 to 5 seconds)</li>
+                    <li class="pl-2">Choose to open in new tabs or windows</li>
+                    <li class="pl-2">Click 'Open URLs' to start</li>
+                </ol>
+                <div class="mt-4 bg-blue-100 border-l-4 border-blue-400 p-3 rounded">
+                    <p class="text-blue-800 text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        <strong>Browser Authorization:</strong> Allow OpenURLs.net to open multiple tabs in your browser settings
+                    </p>
+                </div>
+            </section>
+
+            <section class="testimonials bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-md mt-6">
+                <h2 class="text-2xl font-bold mb-6 text-blue-800 text-center flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    Who Uses OpenURLs?
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 text-blue-800 p-2 rounded-full mr-3">🔬</div>
+                            <h3 class="font-semibold text-gray-800">Academic Researcher</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">"OpenURLs saves me hours when comparing research papers. I can simultaneously open multiple academic articles and cross-reference information instantly."</p>
+                        <div class="text-sm text-gray-500">- Dr. Emily Chen, Neuroscience Researcher</div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">📊</div>
+                            <h3 class="font-semibold text-gray-800">Digital Marketer</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">"As an SEO specialist, I need to analyze multiple websites quickly. OpenURLs helps me compare search rankings and conduct comprehensive website audits in minutes."</p>
+                        <div class="text-sm text-gray-500">- Alex Rodriguez, Marketing Strategist</div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 text-purple-800 p-2 rounded-full mr-3">💻</div>
+                            <h3 class="font-semibold text-gray-800">Web Developer</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">"Compatibility testing across different browsers used to be a nightmare. With OpenURLs, I can open and check multiple web pages simultaneously, streamlining my workflow."</p>
+                        <div class="text-sm text-gray-500">- Sarah Kim, Full-Stack Developer</div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 text-yellow-800 p-2 rounded-full mr-3">🛍️</div>
+                            <h3 class="font-semibold text-gray-800">E-commerce Manager</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">"Price comparison and product management have never been easier. OpenURLs allows me to quickly analyze competitor pricing and update multiple product listings in one go."</p>
+                        <div class="text-sm text-gray-500">- Michael Wong, E-commerce Director</div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-100 text-red-800 p-2 rounded-full mr-3">✈️</div>
+                            <h3 class="font-semibold text-gray-800">Travel Planner</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">"Planning trips involves comparing tons of information. OpenURLs lets me view multiple destinations, hotels, and travel options side by side, making my research so much more efficient."</p>
+                        <div class="text-sm text-gray-500">- Lisa Thompson, Travel Consultant</div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-indigo-100 text-indigo-800 p-2 rounded-full mr-3">📚</div>
+                            <h3 class="font-semibold text-gray-800">Content Creator</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">"Researching and gathering reference materials used to be time-consuming. Now, I can open multiple sources simultaneously and streamline my content creation process."</p>
+                        <div class="text-sm text-gray-500">- David Lee, Freelance Writer</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq bg-gray-50 p-6 rounded-md mt-6">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Frequently Asked Questions
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-md shadow-sm">
+                        <h3 class="font-semibold text-gray-700 mb-2">Where Can You Use OpenURLs?</h3>
+                        <p class="text-gray-600">OpenURLs is a one-click, no-install tool compatible with all modern web browsers. Works seamlessly on Windows, Linux, macOS, iOS, and Android devices, including computers, smartphones, and tablets.</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-md shadow-sm">
+                        <h3 class="font-semibold text-gray-700 mb-2">Is There a Limit to URL Openings?</h3>
+                        <p class="text-gray-600">While there's no strict limit, we recommend opening 20-25 URLs at a time for optimal browser performance. Opening too many URLs simultaneously may cause temporary browser slowdown.</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-md shadow-sm">
+                        <h3 class="font-semibold text-gray-700 mb-2">Is OpenURLs Safe to Use?</h3>
+                        <p class="text-gray-600">Absolutely! OpenURLs is a client-side tool that runs entirely in your browser. We don't store, collect, or transmit any of your personal data. Your privacy and security are our top priorities.</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-md shadow-sm">
+                        <h3 class="font-semibold text-gray-700 mb-2">Mobile Device Compatibility</h3>
+                        <p class="text-gray-600">OpenURLs is fully responsive and works great on mobile devices. The interface adapts to your screen size, ensuring a smooth experience across smartphones and tablets.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mt-12 pt-8 border-t border-border">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold">About</h3>
+                    <p class="text-sm text-muted-foreground">
+                        OpenUrls.net is a simple tool that helps you open multiple URLs at once with a customizable delay between each open.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold">Legal</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a 
+                                href="/terms" 
+                                class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Terms of Service
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="/privacy" 
+                                class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold">Connect</h3>
+                    <ul class="flex items-center space-x-4">
+                        <li>
+                            <a 
+                                href="https://twitter.com/pdmake" 
+                                target="_blank"
+                                class="text-muted-foreground hover:text-foreground transition-colors flex items-center"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="https://github.com/pdmaker/openurls" 
+                                target="_blank"
+                                class="text-muted-foreground hover:text-foreground transition-colors flex items-center"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold">Friends</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a 
+                                href="https://jiashuiyin.com" 
+                                class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                WaterMark Adder
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="https://md2html.com" 
+                                class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Markdown to Html
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+                <p>&copy; <span id="currentYear"></span> OpenUrls.net - A Simple Tool for Opening Multiple URLs</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
