@@ -42,17 +42,40 @@
                         foreground: '#000000',
                         'muted-foreground': '#6b7280',
                         border: '#e5e7eb',
+                    },
+                    animation: {
+                        'background-shine': 'background-shine 10s ease infinite',
+                        'subtle-pulse': 'subtle-pulse 5s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        'background-shine': {
+                            '0%, 100%': { 
+                                'background-position': '0% 50%' 
+                            },
+                            '50%': { 
+                                'background-position': '100% 50%' 
+                            }
+                        },
+                        'subtle-pulse': {
+                            '0%, 100%': { 
+                                opacity: '0.3' 
+                            },
+                            '50%': { 
+                                opacity: '0.5' 
+                            }
+                        }
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="min-h-screen bg-background text-foreground">
-    <div class="container mx-auto max-w-4xl p-8">
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 text-foreground animate-background-shine">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-50/30 via-white/20 to-blue-100/30 animate-subtle-pulse opacity-50"></div>
+    <div class="container mx-auto max-w-4xl p-8 relative z-10">
         <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold mb-2">OpenURLs.net</h1>
-            <p class="text-xl text-muted-foreground">
+            <h1 class="text-4xl font-bold mb-2 text-blue-800 drop-shadow-sm">OpenURLs.net</h1>
+            <p class="text-xl text-blue-600 drop-shadow-sm">
                 A simple tool to open multiple URLs with a customizable delay
             </p>
         </header>
